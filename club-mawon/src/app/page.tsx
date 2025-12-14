@@ -15,7 +15,8 @@ export default function Home() {
   const [active, setActive] = useState(0);
   const [demoOpen, setDemoOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const contactHref = "mailto:contact@clubmawon.com?subject=Club%20Mawon%20—%20Demande%20d'informations";
+  const contactHref =
+    "mailto:deepgitalcontact@gmail.com?subject=Club%20Mawon%20—%20Demande%20d'informations";
 
   const cart = useDemoCart();
 
