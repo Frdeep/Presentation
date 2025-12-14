@@ -53,7 +53,7 @@ export default function Home() {
         subtitle: "Club Mawon × Ghetball",
         description:
           "Démo visuelle de fiche produit : tailles, quantité, micro-interactions. Aucun paiement, aucun stock, aucune commande.",
-        imageUrl: "/maillot-mawon.svg",
+        imageUrl: "/club-mawon/cm-1.jpg",
         priceCents: 5500,
         currency: "EUR",
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
@@ -65,7 +65,7 @@ export default function Home() {
         subtitle: "Édition extérieure",
         description:
           "Même UX que la boutique finale, pour présenter la qualité du design et la fluidité mobile-first.",
-        imageUrl: "/maillot-mawon.svg",
+        imageUrl: "/club-mawon/cm-2.jpg",
         priceCents: 5500,
         currency: "EUR",
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
@@ -76,7 +76,7 @@ export default function Home() {
         subtitle: "Coupe match",
         description:
           "Démo catalogue + panier. Ce produit est un exemple d’extension de gamme (short, hoodie, accessoires).",
-        imageUrl: "/maillot-mawon.svg",
+        imageUrl: "/club-mawon/cm-3.jpg",
         priceCents: 3500,
         currency: "EUR",
         sizes: ["S", "M", "L", "XL"],
@@ -88,7 +88,7 @@ export default function Home() {
         subtitle: "Lifestyle",
         description:
           "Une boutique complète peut inclure variantes, bundles, pages SEO, et une stratégie social pour convertir.",
-        imageUrl: "/maillot-mawon.svg",
+        imageUrl: "/club-mawon/cm-4.jpg",
         priceCents: 6500,
         currency: "EUR",
         sizes: ["S", "M", "L", "XL", "XXL"],
@@ -233,6 +233,24 @@ export default function Home() {
             >
               Découvrir la collection
             </button>
+          </Reveal>
+
+          <Reveal className="mt-10">
+            <div className="mx-auto max-w-xl">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-white shadow-lg shadow-red-500/10 ring-1 ring-red-100">
+                <Image
+                  src="/club-mawon/cm-1.jpg"
+                  alt="Aperçu collection Club Mawon"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent" />
+              </div>
+              <div className="mt-3 text-xs text-gray-500">
+                Visuels fournis (démo) — alternance sur les produits.
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
