@@ -49,7 +49,7 @@ export function BottomSheet({ open, title, onClose, children }: Props) {
           "rounded-t-3xl bg-white",
           "max-h-[85vh] overflow-y-auto",
           "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-          closing ? "translate-y-full" : "translate-y-0",
+          closing ? "translate-y-full" : "translate-y-0 animate-slide-up",
         ].join(" ")}
         style={{
           transform: `translateY(${Math.max(0, dragY)}px)`,
