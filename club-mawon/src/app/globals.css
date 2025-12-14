@@ -5,11 +5,11 @@
   --fg: #0b1220;
   --slate: #0f172a;
   --slate-2: #111827;
-  --mawon-red: #e11d48;
-  --mawon-red-2: #fb7185;
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.22);
-  --shadow: 0 18px 60px rgba(2, 6, 23, 0.16);
+  --mawon-red: #dc2626;
+  --mawon-red-2: #ef4444;
+  --glass: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --shadow: 0 18px 60px rgba(17, 24, 39, 0.12);
 }
 
 @theme inline {
@@ -19,17 +19,7 @@
 }
 
 body {
-  background: radial-gradient(
-      1200px 600px at 10% 0%,
-      rgba(225, 29, 72, 0.14),
-      transparent 55%
-    ),
-    radial-gradient(
-      900px 500px at 90% 20%,
-      rgba(14, 165, 233, 0.12),
-      transparent 60%
-    ),
-    linear-gradient(180deg, #ffffff 0%, #f8fafc 55%, #ffffff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #fff1f2 36%, #ffffff 100%);
   color: var(--fg);
   font-family: var(--font-outfit), ui-sans-serif, system-ui, -apple-system,
     Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -39,11 +29,46 @@ body {
 .glass {
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
   box-shadow: var(--shadow);
 }
 
 .tap-highlight-none {
   -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.badge-pop {
+  animation: badge-pop 420ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes btn-bounce {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(0.96);
+  }
+  75% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-bounce {
+  animation: btn-bounce 360ms cubic-bezier(0.4, 0, 0.2, 1);
 }

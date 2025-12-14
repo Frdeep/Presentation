@@ -9,9 +9,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Club Mawon — Maillot Officiel (Ghetball)",
+  title: "Club Mawon — Démo Boutique (Ghetball × Deepgital)",
   description:
-    "Boutique officielle du Club Mawon : maillot fabriqué par Ghetball. Expérience mobile premium, swipe & cartes 3D.",
+    "Démo visuelle de boutique e-commerce pour le Club Mawon (basket) : design premium, SEO et stratégie social media par Deepgital. Aucun paiement réel.",
   applicationName: "Club Mawon",
   metadataBase: new URL("http://localhost:3000"),
 };

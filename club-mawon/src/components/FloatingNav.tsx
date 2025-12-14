@@ -1,69 +1,69 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+
+type Link = { id: "home" | "shop" | "about"; label: string };
+
 type Props = {
-  items: Array<{ label: string; short: string }>;
-  activeIndex: number;
-  onSelect: (index: number) => void;
-  onOpenDemo?: () => void;
-  demoCount?: number;
-  onContact?: () => void;
+  activeId: Link["id"];
+  onNav: (id: Link["id"]) => void;
 };
 
-export function FloatingNav({
-  items,
-  activeIndex,
-  onSelect,
-  onOpenDemo,
-  demoCount = 0,
-  onContact,
-}: Props) {
+export function FloatingNav({ activeId, onNav }: Props) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const links = useMemo<Link[]>(
+    () => [
+      { id: "home", label: "Accueil" },
+      { id: "shop", label: "Boutique" },
+      { id: "about", label: "À propos" },
+    ],
+    []
+  );
+
   return (
-    <div className="fixed left-1/2 top-4 z-50 w-[min(720px,92vw)] -translate-x-1/2">
-      <div className="glass flex items-center justify-between gap-2 rounded-full px-2 py-2">
-        <div className="flex items-center gap-1 overflow-x-auto px-1">
-          {items.map((it, idx) => {
-            const active = idx === activeIndex;
+    <div className="fixed left-1/2 top-4 z-50 w-[min(520px,92vw)] -translate-x-1/2">
+      <div
+        className={[
+          "tap-highlight-none glass mx-auto flex items-center justify-center",
+          "rounded-full shadow-lg",
+          "backdrop-blur-xl bg-white/80",
+          "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          scrolled ? "scale-[0.96] py-1.5" : "scale-100 py-2",
+        ].join(" ")}
+      >
+        <div className="flex items-center">
+          {links.map((l, idx) => {
+            const active = l.id === activeId;
             return (
-              <button
-                key={it.label}
-                type="button"
-                onClick={() => onSelect(idx)}
-                className={`tap-highlight-none rounded-full px-3 py-2 text-xs font-semibold transition-colors md:text-sm ${
-                  active
-                    ? "bg-slate-950 text-white"
-                    : "text-slate-700 hover:bg-white/60"
-                }`}
-                aria-current={active ? "page" : undefined}
-                title={it.label}
-              >
-                <span className="md:hidden">{it.short}</span>
-                <span className="hidden md:inline">{it.label}</span>
-              </button>
+              <div key={l.id} className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => onNav(l.id)}
+                  className={[
+                    "h-11 px-4 rounded-full text-sm font-semibold",
+                    "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                    "active:scale-95",
+                    active
+                      ? "text-red-600 bg-red-50"
+                      : "text-gray-700 hover:bg-red-50 hover:text-red-600",
+                  ].join(" ")}
+                >
+                  {l.label}
+                </button>
+                {idx < links.length - 1 ? (
+                  <div className="mx-1 h-5 w-px bg-gray-200" aria-hidden />
+                ) : null}
+              </div>
             );
           })}
-        </div>
-
-        <div className="flex items-center gap-2 pr-1">
-          <button
-            type="button"
-            onClick={onOpenDemo}
-            className="tap-highlight-none relative rounded-full bg-white/60 px-4 py-2 text-xs font-semibold text-slate-900 ring-1 ring-slate-900/10 transition-colors hover:bg-white md:text-sm"
-            title="Ouvrir la démo e-commerce"
-          >
-            Démo
-            {demoCount > 0 ? (
-              <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-slate-950 text-[11px] font-bold text-white">
-                {demoCount}
-              </span>
-            ) : null}
-          </button>
-          <button
-            type="button"
-            onClick={onContact}
-            className="tap-highlight-none rounded-full bg-rose-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-rose-500 md:text-sm"
-          >
-            Contact
-          </button>
         </div>
       </div>
     </div>
