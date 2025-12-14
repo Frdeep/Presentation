@@ -7,10 +7,32 @@ import { useMemo, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { FlipCard } from "@/components/FlipCard";
 import { FloatingNav } from "@/components/FloatingNav";
+import { DemoShopModal } from "@/components/DemoShopModal";
+import { DemoCartDrawer } from "@/components/DemoCartDrawer";
+import { useDemoCart } from "@/lib/cart";
 
 export default function Home() {
   const [active, setActive] = useState(0);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const contactHref = "mailto:contact@clubmawon.com?subject=Club%20Mawon%20—%20Demande%20d'informations";
+
+  const cart = useDemoCart();
+
+  const demoProduct = useMemo(
+    () => ({
+      id: "demo_mawon_jersey",
+      name: "Maillot Officiel Club Mawon",
+      manufacturer: "Ghetball",
+      description:
+        "Démo e-commerce : fiche produit, choix de taille, ajout au panier. Aucun paiement, aucun stock, aucune commande.",
+      imageUrl: "/maillot-mawon.svg",
+      priceCents: 5500,
+      currency: "EUR",
+      sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    }),
+    []
+  );
 
   const navItems = useMemo(
     () => [
@@ -65,10 +87,10 @@ export default function Home() {
             <div className="mt-auto grid gap-2 pt-4">
               <button
                 type="button"
-                onClick={() => window.location.assign(contactHref)}
+                onClick={() => setDemoOpen(true)}
                 className="tap-highlight-none w-full rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
               >
-                Demander un devis
+                Ouvrir la démo e-commerce
               </button>
               <button
                 type="button"
@@ -117,7 +139,7 @@ export default function Home() {
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
               <div className="font-semibold text-slate-950">Axe 1</div>
               <div className="mt-2">
-                Un site vitrine premium pour renforcer l’image du club.
+                Mettre en place une plateforme e-commerce (démo UI incluse).
               </div>
             </div>
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
@@ -135,7 +157,7 @@ export default function Home() {
                 Expérience “mobile-first”
               </div>
               <div className="mt-2">
-                Swipe fluide, sections en cartes 3D, accès panier en 1 geste.
+                Swipe fluide, sections en cartes 3D, et démo e-commerce.
               </div>
             </div>
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
@@ -222,14 +244,14 @@ export default function Home() {
       },
       {
         title: "Site web — features",
-        kicker: "Carte 5 — Site vitrine (exemples de possibilités)",
+        kicker: "Carte 5 — Démo e-commerce (sans paiement)",
         accent: "red" as const,
         front: (
           <div className="grid gap-3 text-sm text-slate-700">
             {[
               ["Identité", "Storytelling du club + mise en avant du maillot."],
               ["Communauté", "Liens réseaux, contenus, call-to-actions."],
-              ["Démo e-commerce", "Exemple de ce qu’on sait construire (sur demande)."],
+              ["Démo e-commerce", "Catalogue + panier (sans paiement, sans stock)."],
             ].map(([h, p]) => (
               <div
                 key={h}
@@ -256,7 +278,7 @@ export default function Home() {
               <ul className="mt-2 list-disc pl-5">
                 <li>Swipe (horizontal) + cartes 3D flip</li>
                 <li>Navbar flottante glass</li>
-                <li>CTA contact/devis</li>
+                <li>Démo e-commerce : fiche produit + panier</li>
               </ul>
             </div>
           </div>
@@ -314,8 +336,9 @@ export default function Home() {
         items={navItems}
         activeIndex={active}
         onSelect={(idx) => slider.current?.moveToIdx(idx)}
-        ctaLabel="Contact"
-        onCta={() => window.location.assign(contactHref)}
+        onOpenDemo={() => setCartOpen(true)}
+        demoCount={cart.count}
+        onContact={() => window.location.assign(contactHref)}
       />
 
       <header className="mx-auto w-[min(980px,92vw)] pt-24">
@@ -336,10 +359,10 @@ export default function Home() {
 
           <button
             type="button"
-            onClick={() => window.location.assign(contactHref)}
+            onClick={() => setDemoOpen(true)}
             className="tap-highlight-none hidden rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500 md:inline"
           >
-            Nous contacter
+            Voir la démo e-commerce
           </button>
         </div>
       </header>
@@ -384,17 +407,17 @@ export default function Home() {
                   Vitrine premium (démo)
                 </div>
                 <div className="mt-1 text-lg font-semibold text-slate-950">
-                  Design mobile-first, swipe & cartes 3D.
+                  Design mobile-first, swipe & cartes 3D + démo e-commerce.
                 </div>
               </div>
 
               <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => window.location.assign(contactHref)}
+                  onClick={() => setDemoOpen(true)}
                   className="tap-highlight-none rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
                 >
-                  Demander un devis
+                  Ouvrir la démo
                 </button>
                 <button
                   type="button"
@@ -409,12 +432,34 @@ export default function Home() {
         </div>
       </main>
 
+      <DemoShopModal
+        open={demoOpen}
+        onClose={() => setDemoOpen(false)}
+        product={demoProduct}
+        onAdd={(it) => cart.add(it, 1)}
+        onOpenCart={() => {
+          setDemoOpen(false);
+          setCartOpen(true);
+        }}
+      />
+
+      <DemoCartDrawer
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+        items={cart.items}
+        total={cart.total}
+        onRemove={cart.remove}
+        onSetQuantity={cart.setQuantity}
+        onClear={cart.clear}
+        contactHref={contactHref}
+      />
+
       <button
         type="button"
-        onClick={() => window.location.assign(contactHref)}
+        onClick={() => setDemoOpen(true)}
         className="tap-highlight-none fixed bottom-4 right-4 z-40 rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_60px_rgba(225,29,72,0.35)] md:hidden"
       >
-        Contact
+        Démo
       </button>
     </div>
   );
