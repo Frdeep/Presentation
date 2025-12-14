@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#e11d48"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="900" fill="url(#bg)"/>
+
+  <!-- Jersey silhouette -->
+  <g filter="url(#shadow)" transform="translate(130 110)">
+    <path d="M162 118 L38 198 L0 332 L82 366 L116 282 L150 302 L150 660 Q150 700 190 700 L450 700 Q490 700 490 660 L490 302 L524 282 L558 366 L640 332 L602 198 L478 118 Q454 160 400 160 L240 160 Q186 160 162 118 Z" fill="#ffffff" stroke="#0f172a" stroke-opacity="0.12" stroke-width="6"/>
+
+    <!-- Red vertical stripe -->
+    <path d="M310 160 L330 160 L330 700 L310 700 Z" fill="url(#red)" opacity="0.95"/>
+
+    <!-- Collar -->
+    <path d="M240 160 Q320 212 400 160" fill="none" stroke="#0f172a" stroke-opacity="0.22" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Crest placeholder -->
+    <g transform="translate(210 240)">
+      <circle cx="0" cy="0" r="36" fill="#0f172a" opacity="0.9"/>
+      <path d="M-18 10 L0 -16 L18 10" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="58" text-anchor="middle" font-family="Outfit, system-ui, sans-serif" font-size="18" fill="#0f172a" opacity="0.75">MAWON</text>
+    </g>
+
+    <!-- Sponsor placeholder -->
+    <g transform="translate(320 340)">
+      <rect x="-120" y="-34" width="240" height="68" rx="18" fill="#0f172a" opacity="0.08"/>
+      <text x="0" y="10" text-anchor="middle" font-family="Outfit, system-ui, sans-serif" font-size="26" fill="#0f172a" opacity="0.65">GHETBALL</text>
+    </g>
+
+    <!-- Subtle seams -->
+    <path d="M150 302 Q320 360 490 302" fill="none" stroke="#0f172a" stroke-opacity="0.08" stroke-width="6"/>
+    <path d="M230 160 L230 700" fill="none" stroke="#0f172a" stroke-opacity="0.06" stroke-width="6"/>
+    <path d="M410 160 L410 700" fill="none" stroke="#0f172a" stroke-opacity="0.06" stroke-width="6"/>
+  </g>
+
+  <text x="450" y="820" text-anchor="middle" font-family="Outfit, system-ui, sans-serif" font-size="18" fill="#0f172a" opacity="0.55">
+    Visuel de démonstration — remplacez par la photo officielle
+  </text>
+</svg>
