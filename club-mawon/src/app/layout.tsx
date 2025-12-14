@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 
@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     "Boutique officielle du Club Mawon : maillot fabriqué par Ghetball. Expérience mobile premium, swipe & cartes 3D.",
   applicationName: "Club Mawon",
   metadataBase: new URL("http://localhost:3000"),
+};
+
+export const viewport: Viewport = {
   themeColor: "#E11D48",
 };
 

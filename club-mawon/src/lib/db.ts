@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import path from "node:path";
 import fs from "node:fs";
+import crypto from "node:crypto";
 
 export type ProductVariant = {
   id: string;
@@ -35,6 +36,7 @@ export function getDb() {
 
   const db = new Database(getDbFilePath());
   db.pragma("journal_mode = WAL");
+  db.pragma("foreign_keys = ON");
 
   // Schema
   db.exec(`
@@ -201,7 +203,7 @@ export function createOrder(input: CreateOrderInput): {
   const db = getDb();
 
   const now = new Date().toISOString();
-  const orderId = `ord_${Math.random().toString(16).slice(2)}${Date.now().toString(16)}`;
+  const orderId = `ord_${crypto.randomUUID()}`;
 
   const getVariantStmt = db.prepare(
     "SELECT id, product_id as productId, size, sku, price_cents as priceCents, currency, stock FROM product_variants WHERE id = ?"
@@ -236,7 +238,7 @@ export function createOrder(input: CreateOrderInput): {
       totalCents += lineTotal;
 
       orderItemsToInsert.push({
-        id: `oi_${Math.random().toString(16).slice(2)}${Date.now().toString(16)}`,
+        id: `oi_${crypto.randomUUID()}`,
         variantId: variant.id,
         size: variant.size,
         sku: variant.sku,

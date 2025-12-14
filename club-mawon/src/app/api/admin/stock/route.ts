@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 
 function requireAdmin(req: Request) {
   const expected = process.env.ADMIN_KEY;
-  if (!expected) return false;
+  if (!expected) return null;
   const provided = req.headers.get("x-admin-key");
   return Boolean(provided && provided === expected);
 }
@@ -17,7 +17,14 @@ const PatchSchema = z.object({
 });
 
 export async function GET(req: Request) {
-  if (!requireAdmin(req)) {
+  const auth = requireAdmin(req);
+  if (auth === null) {
+    return NextResponse.json(
+      { ok: false, error: "ADMIN_KEY_NOT_SET" },
+      { status: 500 }
+    );
+  }
+  if (!auth) {
     return NextResponse.json({ ok: false, error: "UNAUTHORIZED" }, { status: 401 });
   }
 
@@ -32,7 +39,14 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  if (!requireAdmin(req)) {
+  const auth = requireAdmin(req);
+  if (auth === null) {
+    return NextResponse.json(
+      { ok: false, error: "ADMIN_KEY_NOT_SET" },
+      { status: 500 }
+    );
+  }
+  if (!auth) {
     return NextResponse.json({ ok: false, error: "UNAUTHORIZED" }, { status: 401 });
   }
 

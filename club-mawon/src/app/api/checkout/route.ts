@@ -42,16 +42,17 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true, ...res });
   } catch (e) {
+    if (e instanceof z.ZodError) {
+      return NextResponse.json(
+        { ok: false, error: "VALIDATION_ERROR", details: e.flatten() },
+        { status: 422 }
+      );
+    }
     const message = e instanceof Error ? e.message : "UNKNOWN";
     const status =
       message === "OUT_OF_STOCK" || message === "VARIANT_NOT_FOUND"
         ? 409
         : 400;
-    return NextResponse.json(
-      { ok: false, error: message },
-      {
-        status,
-      }
-    );
+    return NextResponse.json({ ok: false, error: message }, { status });
   }
 }
