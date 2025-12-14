@@ -3,42 +3,14 @@
 import "keen-slider/keen-slider.min.css";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { FlipCard } from "@/components/FlipCard";
 import { FloatingNav } from "@/components/FloatingNav";
-import { ShopModal } from "@/components/ShopModal";
-import { CartDrawer } from "@/components/CartDrawer";
-import { apiGet } from "@/lib/api";
-import { useCart } from "@/lib/cart";
-import { Product } from "@/lib/types";
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const [shopOpen, setShopOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
-
-  const { items, count, add, remove, setQuantity, clear } = useCart();
-
-  const [products, setProducts] = useState<Product[] | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    apiGet<{ products: Product[] }>("/api/products")
-      .then((res) => {
-        if (!mounted) return;
-        setProducts(res.products);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setProducts([]);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const product = products?.[0] ?? null;
+  const contactHref = "mailto:contact@clubmawon.com?subject=Club%20Mawon%20—%20Demande%20d'informations";
 
   const navItems = useMemo(
     () => [
@@ -93,17 +65,17 @@ export default function Home() {
             <div className="mt-auto grid gap-2 pt-4">
               <button
                 type="button"
-                onClick={() => setShopOpen(true)}
+                onClick={() => window.location.assign(contactHref)}
                 className="tap-highlight-none w-full rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
               >
-                Voir le maillot
+                Demander un devis
               </button>
               <button
                 type="button"
-                onClick={() => setCartOpen(true)}
+                onClick={() => window.location.assign(contactHref)}
                 className="tap-highlight-none w-full rounded-full bg-white/60 px-5 py-3 text-sm font-semibold text-slate-900 ring-1 ring-slate-900/10"
               >
-                Ouvrir le panier
+                Nous contacter
               </button>
             </div>
           </div>
@@ -145,13 +117,13 @@ export default function Home() {
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
               <div className="font-semibold text-slate-950">Axe 1</div>
               <div className="mt-2">
-                Plateforme e-commerce dédiée à la vente des maillots officiels.
+                Un site vitrine premium pour renforcer l’image du club.
               </div>
             </div>
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
               <div className="font-semibold text-slate-950">Axe 2</div>
               <div className="mt-2">
-                Stratégie social media dynamique pour engager et convertir.
+                Stratégie social media dynamique pour engager la communauté.
               </div>
             </div>
           </div>
@@ -184,9 +156,9 @@ export default function Home() {
         front: (
           <div className="grid gap-3 text-sm text-slate-700">
             {[
-              ["Faciliter l’achat", "Parcours simple, rapide, sans friction."],
-              ["Gestion optimisée", "Stocks & commandes clairs, exportables."],
-              ["Revenus additionnels", "Nouvelle source de revenus pour le club."],
+              ["Valoriser la marque", "Une présence digitale cohérente et premium."],
+              ["Fédérer les fans", "Créer une expérience qui donne envie de suivre et partager."],
+              ["Attirer des partenaires", "Un support pro pour sponsors et collaborations."],
             ].map(([h, p]) => (
               <div
                 key={h}
@@ -202,12 +174,12 @@ export default function Home() {
           <div className="grid gap-3 text-sm text-slate-700">
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
               <div className="font-semibold text-slate-950">
-                KPI (V1 recommandés)
+                KPI recommandés
               </div>
               <ul className="mt-2 list-disc pl-5">
-                <li>Taux d’ajout au panier</li>
-                <li>Taux de conversion checkout</li>
-                <li>Ruptures / vitesse de vente par taille</li>
+                <li>Portée & croissance communauté</li>
+                <li>Taux d’engagement (likes, commentaires, partages)</li>
+                <li>Clics vers contact / sponsors</li>
               </ul>
             </div>
           </div>
@@ -250,14 +222,14 @@ export default function Home() {
       },
       {
         title: "Site web — features",
-        kicker: "Carte 5 — Catalogue / Gestion / Paiement",
+        kicker: "Carte 5 — Site vitrine (exemples de possibilités)",
         accent: "red" as const,
         front: (
           <div className="grid gap-3 text-sm text-slate-700">
             {[
-              ["Catalogue", "Présentation claire et premium du maillot."],
-              ["Gestion intelligente", "Stocks, commandes, base clients."],
-              ["Expérience optimisée", "Mobile-first + paiements sécurisés."],
+              ["Identité", "Storytelling du club + mise en avant du maillot."],
+              ["Communauté", "Liens réseaux, contenus, call-to-actions."],
+              ["Démo e-commerce", "Exemple de ce qu’on sait construire (sur demande)."],
             ].map(([h, p]) => (
               <div
                 key={h}
@@ -272,19 +244,19 @@ export default function Home() {
         back: (
           <div className="grid gap-3 text-sm text-slate-700">
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
-              <div className="font-semibold text-slate-950">Backend (V1)</div>
+              <div className="font-semibold text-slate-950">Tech (Netlify-friendly)</div>
               <ul className="mt-2 list-disc pl-5">
-                <li>API produits/tailles/stocks</li>
-                <li>Création de commande + réserve stock</li>
-                <li>Endpoint admin stock (clé serveur)</li>
+                <li>Site 100% statique (pas d’API, pas de DB)</li>
+                <li>Chargement instant via CDN</li>
+                <li>Déploiement simple et stable</li>
               </ul>
             </div>
             <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-slate-900/10">
-              <div className="font-semibold text-slate-950">Frontend (V1)</div>
+              <div className="font-semibold text-slate-950">UX</div>
               <ul className="mt-2 list-disc pl-5">
                 <li>Swipe (horizontal) + cartes 3D flip</li>
-                <li>Shop modal + panier drawer</li>
-                <li>Checkout simple (création commande)</li>
+                <li>Navbar flottante glass</li>
+                <li>CTA contact/devis</li>
               </ul>
             </div>
           </div>
@@ -342,8 +314,8 @@ export default function Home() {
         items={navItems}
         activeIndex={active}
         onSelect={(idx) => slider.current?.moveToIdx(idx)}
-        cartCount={count}
-        onOpenCart={() => setCartOpen(true)}
+        ctaLabel="Contact"
+        onCta={() => window.location.assign(contactHref)}
       />
 
       <header className="mx-auto w-[min(980px,92vw)] pt-24">
@@ -364,10 +336,10 @@ export default function Home() {
 
           <button
             type="button"
-            onClick={() => setShopOpen(true)}
+            onClick={() => window.location.assign(contactHref)}
             className="tap-highlight-none hidden rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500 md:inline"
           >
-            Acheter
+            Nous contacter
           </button>
         </div>
       </header>
@@ -409,27 +381,27 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="text-xs font-semibold tracking-wide text-slate-600">
-                  V1 e-commerce (backend + frontend)
+                  Vitrine premium (démo)
                 </div>
                 <div className="mt-1 text-lg font-semibold text-slate-950">
-                  Produits, stocks, commandes — déjà branchés.
+                  Design mobile-first, swipe & cartes 3D.
                 </div>
               </div>
 
               <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => setShopOpen(true)}
+                  onClick={() => window.location.assign(contactHref)}
                   className="tap-highlight-none rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
                 >
-                  Ouvrir la boutique
+                  Demander un devis
                 </button>
                 <button
                   type="button"
-                  onClick={() => setCartOpen(true)}
+                  onClick={() => window.location.assign(contactHref)}
                   className="tap-highlight-none rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white"
                 >
-                  Voir le panier
+                  Contact
                 </button>
               </div>
             </div>
@@ -437,32 +409,12 @@ export default function Home() {
         </div>
       </main>
 
-      <ShopModal
-        open={shopOpen}
-        onClose={() => setShopOpen(false)}
-        product={product}
-        onAddToCart={(it) => {
-          add(it, 1);
-          setShopOpen(false);
-          setCartOpen(true);
-        }}
-      />
-
-      <CartDrawer
-        open={cartOpen}
-        onClose={() => setCartOpen(false)}
-        items={items}
-        onRemove={remove}
-        onSetQuantity={setQuantity}
-        onClear={clear}
-      />
-
       <button
         type="button"
-        onClick={() => setShopOpen(true)}
+        onClick={() => window.location.assign(contactHref)}
         className="tap-highlight-none fixed bottom-4 right-4 z-40 rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_60px_rgba(225,29,72,0.35)] md:hidden"
       >
-        Acheter
+        Contact
       </button>
     </div>
   );
